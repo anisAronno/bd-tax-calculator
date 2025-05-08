@@ -1,0 +1,364 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bangladesh Income Tax Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f8fb;
+      color: #333;
+      padding: 20px;
+      margin: 0;
+    }
+    .main-container {
+      max-width: 1200px;
+      margin: auto;
+      transition: all 0.5s ease;
+    }
+    .input-container {
+      width: 50%;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      transition: all 0.5s ease;
+      box-sizing: border-box;
+    }
+    .flex-container {
+      display: flex;
+      gap: 30px;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .result-container {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      flex: 1;
+      display: none;
+      width: 50%;
+      box-sizing: border-box;
+    }
+    h2 {
+      color: #2b6777;
+      text-align: center;
+      margin-top: 0;
+    }
+    h3 {
+      color: #2b6777;
+      margin-top: 25px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #2b6777;
+      color: white;
+      padding: 12px 20px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+    }
+    .result-table {
+      width: 100%;
+      margin-top: 15px;
+      border-collapse: collapse;
+    }
+    .result-table th, .result-table td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: left;
+    }
+    .result-table th {
+      background-color: #dfe9f3;
+    }
+    .highlight {
+      background-color: #eaf7ea;
+    }
+    .notice {
+      background: #fff3cd;
+      color: #856404;
+      border-left: 6px solid #ffeeba;
+      padding: 12px;
+      margin-top: 20px;
+    }
+    .summary {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      background: #e8f5e9;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .summary-item {
+      text-align: center;
+    }
+    .summary-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2b6777;
+    }
+    @media (min-width: 992px) {
+      .flex-container.has-result {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      .input-container.shifted {
+        margin: 0;
+      }
+      .input-container, .result-container {
+        width: 49%;
+      }
+    }
+    @media (max-width: 991px) {
+      .flex-container {
+        flex-direction: column;
+      }
+      .input-container.shifted {
+        margin: 0 auto 30px auto;
+      }
+      .input-container, .result-container {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="flex-container" id="mainContainer">
+      <div class="input-container" id="inputContainer">
+        <h2>Bangladesh Income Tax Calculator</h2>
+        <label for="gender">Gender:</label>
+        <select id="gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Senior Citizen">Senior Citizen</option>
+        </select>
+
+        <label for="salary">Monthly Salary (required):</label>
+        <input type="number" id="salary" placeholder="Enter monthly salary" required />
+
+        <label for="festival">Festival Bonus:</label>
+        <input type="number" id="festival" placeholder="Enter festival bonus" />
+
+        <label for="otherIncome">Other Income:</label>
+        <input type="number" id="otherIncome" placeholder="Enter other income" />
+
+        <label>Investment Breakdown:</label>
+        <label for="savings">Savings Certificate (Upto 5 Lac):</label>
+        <input type="number" id="savings" placeholder="Maximum 500,000" max="500000" onchange="validateInput(this, 500000)" />
+
+        <label for="dps">DPS (Upto 120,000):</label>
+        <input type="number" id="dps" placeholder="Maximum 120,000" max="120000" onchange="validateInput(this, 120000)" />
+
+        <label for="lip">LIP (Upto 10% of Policy Value):</label>
+        <input type="number" id="lip" placeholder="Enter LIP amount" />
+
+        <label for="share">Share Market:</label>
+        <input type="number" id="share" placeholder="Enter share market investment" />
+
+        <label for="rpf">Self & Employer's Contrib. to RPF:</label>
+        <input type="number" id="rpf" placeholder="Enter RPF contribution" />
+
+        <label for="otherInv">Others:</label>
+        <input type="number" id="otherInv" placeholder="Enter other investments" />
+
+        <button onclick="calculateTax()">Calculate Tax</button>
+      </div>
+      
+      <div class="result-container" id="resultContainer">
+        <div id="result"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to validate input limits
+    function validateInput(input, maxValue) {
+      const value = parseFloat(input.value) || 0;
+      if (value > maxValue) {
+        alert(`Maximum allowed value is ${maxValue.toLocaleString()}`);
+        input.value = maxValue;
+      }
+    }
+    
+    function calculateTax() {
+      // Basic inputs
+      const gender = document.getElementById("gender").value;
+      const salary = parseFloat(document.getElementById("salary").value) || 0;
+      const festival = parseFloat(document.getElementById("festival").value) || 0;
+      const otherIncome = parseFloat(document.getElementById("otherIncome").value) || 0;
+      const minimumTax = 5000; // Minimum tax as per government rules
+
+      // Investment inputs
+      const savings = parseFloat(document.getElementById("savings").value) || 0;
+      const dps = parseFloat(document.getElementById("dps").value) || 0;
+      const lip = parseFloat(document.getElementById("lip").value) || 0;
+      const share = parseFloat(document.getElementById("share").value) || 0;
+      const rpf = parseFloat(document.getElementById("rpf").value) || 0;
+      const otherInv = parseFloat(document.getElementById("otherInv").value) || 0;
+
+      if (!salary) {
+        alert("Monthly salary is required");
+        return;
+      }
+
+      // Calculate total annual income
+      const annualIncome = (salary * 12) + festival + otherIncome;
+      
+      // Calculate exempted income (min of 1/3 of annual income or 450,000)
+      const exemption = Math.round(Math.min(annualIncome / 3, 450000));
+      
+      // Calculate taxable income
+      const taxableIncome = Math.max(0, annualIncome - exemption);
+      
+      // Calculate allowable investment (20% of taxable income)
+      const allowableInvestment = Math.round(taxableIncome * 0.20);
+      
+      // Calculate total investment
+      const totalInvestment = savings + dps + lip + share + rpf + otherInv;
+      
+      // Calculate rebateable investment (min of total investment or allowable investment)
+      const rebateableInvestment = Math.min(totalInvestment, allowableInvestment);
+      
+      // Set tax-free threshold based on gender
+      const taxFreeThreshold = (gender === "Female" || gender === "Senior Citizen") ? 400000 : 350000;
+      
+      // Calculate tax according to the formula provided
+      let tax = 0;
+      let remainingIncome = taxableIncome;
+      
+      // Complex tax calculation based on slabs
+      if (remainingIncome > taxFreeThreshold) {
+        // First slab (after tax-free threshold)
+        const slab1Limit = 100000;
+        const slab1Amount = Math.min(remainingIncome - taxFreeThreshold, slab1Limit);
+        tax += slab1Amount * 0.05;
+        remainingIncome -= (taxFreeThreshold + slab1Amount);
+        
+        // Second slab
+        if (remainingIncome > 0) {
+          const slab2Limit = 400000;
+          const slab2Amount = Math.min(remainingIncome, slab2Limit);
+          tax += slab2Amount * 0.10;
+          remainingIncome -= slab2Amount;
+          
+          // Third slab
+          if (remainingIncome > 0) {
+            const slab3Limit = 500000;
+            const slab3Amount = Math.min(remainingIncome, slab3Limit);
+            tax += slab3Amount * 0.15;
+            remainingIncome -= slab3Amount;
+            
+            // Fourth slab
+            if (remainingIncome > 0) {
+              const slab4Limit = 500000;
+              const slab4Amount = Math.min(remainingIncome, slab4Limit);
+              tax += slab4Amount * 0.20;
+              remainingIncome -= slab4Amount;
+              
+              // Fifth slab
+              if (remainingIncome > 0) {
+                const slab5Limit = 2000000;
+                const slab5Amount = Math.min(remainingIncome, slab5Limit);
+                tax += slab5Amount * 0.25;
+                remainingIncome -= slab5Amount;
+                
+                // Final slab (above 3.5M taxable income + tax-free threshold)
+                if (remainingIncome > 0) {
+                  tax += remainingIncome * 0.30;
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      // Round tax
+      tax = Math.round(tax);
+      
+      // Calculate rebate (15% of rebateable investment)
+      const rebate = Math.round((rebateableInvestment * 0.15));
+      
+      // Check if minimum tax should apply (only if taxable income exceeds the threshold)
+      const shouldApplyMinimumTax = taxableIncome > taxFreeThreshold;
+      
+      // Calculate final tax after rebate
+      const taxAfterRebate = Math.max(tax - rebate, 0);
+      const finalTax = shouldApplyMinimumTax ? Math.max(taxAfterRebate, minimumTax) : taxAfterRebate;
+      
+      // Calculate tax without investment
+      const taxWithoutInvestment = shouldApplyMinimumTax ? Math.max(tax, minimumTax) : tax;
+      
+      // Calculate monthly tax
+      const monthlyTaxWithInvestment = Math.round(finalTax / 12);
+      const monthlyTaxWithoutInvestment = Math.round(taxWithoutInvestment / 12);
+
+      // Create notice if minimum tax is applied
+      const notice = shouldApplyMinimumTax && (finalTax <= minimumTax && finalTax > 0) ? 
+        '<div class="notice">Minimum tax of BDT 5,000 is applied as per government rules for taxable income exceeding the threshold.</div>' : "";
+
+      // Display results
+      document.getElementById("result").innerHTML = `
+        <h2>Tax Calculation Results</h2>
+        ${notice}
+        <div class="summary">
+          <div class="summary-item">
+            <div>Annual Tax With Investment</div>
+            <div class="summary-value">BDT ${finalTax.toLocaleString()}</div>
+          </div>
+          <div class="summary-item">
+            <div>Monthly Tax With Investment</div>
+            <div class="summary-value">BDT ${monthlyTaxWithInvestment.toLocaleString()}</div>
+          </div>
+        </div>
+        
+        <h3>👉 Detailed Calculation</h3>
+        <table class="result-table">
+          <tr><th>Total Annual Income</th><td>BDT ${annualIncome.toLocaleString()}</td></tr>
+          <tr><th>Exempted Income</th><td>BDT ${exemption.toLocaleString()}</td></tr>
+          <tr><th>Taxable Income</th><td>BDT ${taxableIncome.toLocaleString()}</td></tr>
+          <tr><th>Tax-Free Threshold (${gender})</th><td>BDT ${taxFreeThreshold.toLocaleString()}</td></tr>
+          <tr><th>Allowable Investment (20% of Taxable Income)</th><td>BDT ${allowableInvestment.toLocaleString()}</td></tr>
+          <tr><th>Total Investment</th><td>BDT ${totalInvestment.toLocaleString()}</td></tr>
+          <tr><th>Rebateable Investment</th><td>BDT ${rebateableInvestment.toLocaleString()} ${totalInvestment > allowableInvestment ? '<span class="notice" style="font-size: 12px; padding: 2px 5px; margin: 0;">(Limited to 20% of taxable income)</span>' : ''}</td></tr>
+          <tr><th>Rebate (15%)</th><td>BDT ${rebate.toLocaleString()}</td></tr>
+        </table>
+
+        <h3>👉 With Investment</h3>
+        <table class="result-table">
+          <tr class="highlight"><th>Final Payable Tax</th><td>BDT ${finalTax.toLocaleString()}</td></tr>
+          <tr><th>Monthly Tax</th><td>BDT ${monthlyTaxWithInvestment.toLocaleString()}</td></tr>
+        </table>
+
+        <h3>👉 Without Investment</h3>
+        <table class="result-table">
+          <tr class="highlight"><th>Final Payable Tax</th><td>BDT ${taxWithoutInvestment.toLocaleString()}</td></tr>
+          <tr><th>Monthly Tax</th><td>BDT ${monthlyTaxWithoutInvestment.toLocaleString()}</td></tr>
+        </table>
+      `;
+      
+      // Apply layout changes
+      document.getElementById("mainContainer").classList.add("has-result");
+      document.getElementById("inputContainer").classList.add("shifted");
+      document.getElementById("resultContainer").style.display = "block";
+    }
+  </script>
+</body>
+</html>
