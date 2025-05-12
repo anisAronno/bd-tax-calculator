@@ -283,7 +283,13 @@
           />
 
           <label for="rpf">Self & Employer's Contrib. to RPF:</label>
-          <input type="text" id="rpf" placeholder="Enter RPF contribution" />
+          <input
+            type="text"
+            id="rpf"
+            placeholder="Enter RPF contribution"
+            max="1000000"
+            onchange="validateInput(this, 1000000)"
+          />
 
           <label for="otherInv">Others:</label>
           <input
