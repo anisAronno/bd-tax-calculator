@@ -132,13 +132,22 @@
         }
       }
       @media (min-width: 991px) {
-        .result-table th,
         .result-table td {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           max-width: 0;
           width: auto;
+          min-width: 200px;
+        }
+
+        .summary-value {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 0;
+          width: auto;
+          min-width: 200px;
         }
       }
     </style>
