@@ -17,8 +17,8 @@
       transition: all 0.5s ease;
     }
     .input-container {
-      width: 50%;
-      margin: 0 auto;
+      width: 48%;
+      margin: 0;
       background: #ffffff;
       padding: 30px;
       border-radius: 12px;
@@ -29,18 +29,17 @@
     .flex-container {
       display: flex;
       gap: 30px;
-      flex-direction: column;
-      justify-content: center;
+      flex-direction: row;
+      justify-content: space-between;
     }
     .result-container {
       background: #ffffff;
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      flex: 1;
-      display: none;
-      width: 50%;
+      width: 48%;
       box-sizing: border-box;
+      display: block;
     }
     h2 {
       color: #2b6777;
@@ -114,27 +113,13 @@
       font-weight: bold;
       color: #2b6777;
     }
-    @media (min-width: 992px) {
-      .flex-container.has-result {
-        flex-direction: row;
-        justify-content: space-between;
-      }
-      .input-container.shifted {
-        margin: 0;
-      }
-      .input-container, .result-container {
-        width: 49%;
-      }
-    }
     @media (max-width: 991px) {
       .flex-container {
         flex-direction: column;
       }
-      .input-container.shifted {
-        margin: 0 auto 30px auto;
-      }
       .input-container, .result-container {
         width: 100%;
+        margin-bottom: 20px;
       }
     }
   </style>
@@ -183,7 +168,43 @@
       </div>
       
       <div class="result-container" id="resultContainer">
-        <div id="result"></div>
+        <div id="result">
+          <h2>Tax Calculation Results</h2>
+          <div class="summary">
+            <div class="summary-item">
+              <div>Your Annual Tax</div>
+              <div class="summary-value">BDT 0</div>
+            </div>
+            <div class="summary-item">
+              <div>Your Monthly Tax</div>
+              <div class="summary-value">BDT 0</div>
+            </div>
+          </div>
+          
+          <h3>👉 Detailed Calculation</h3>
+          <table class="result-table">
+            <tr><th>Total Annual Income</th><td>BDT 0</td></tr>
+            <tr><th>Exempted Income</th><td>BDT 0</td></tr>
+            <tr><th>Taxable Income</th><td>BDT 0</td></tr>
+            <tr><th>Tax-Free Threshold</th><td>BDT 0</td></tr>
+            <tr><th>Allowable Investment (20% of Taxable Income)</th><td>BDT 0</td></tr>
+            <tr><th>Total Investment</th><td>BDT 0</td></tr>
+            <tr><th>Rebateable Investment</th><td>BDT 0</td></tr>
+            <tr><th>Rebate</th><td>BDT 0</td></tr>
+          </table>
+
+          <h3>👉 Tax After Investment</h3>
+          <table class="result-table">
+            <tr class="highlight"><th>Final Payable Tax</th><td>BDT 0</td></tr>
+            <tr><th>Monthly Tax</th><td>BDT 0</td></tr>
+          </table>
+
+          <h3>👉 Tax Without Investment</h3>
+          <table class="result-table">
+            <tr class="highlight"><th>Final Payable Tax</th><td>BDT 0</td></tr>
+            <tr><th>Monthly Tax</th><td>BDT 0</td></tr>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -227,15 +248,6 @@
       
       // Calculate taxable income
       const taxableIncome = Math.max(0, annualIncome - exemption);
-      
-      // Calculate allowable investment (20% of taxable income)
-      const allowableInvestment = Math.round(taxableIncome * 0.20);
-      
-      // Calculate total investment
-      const totalInvestment = savings + dps + lip + share + rpf + otherInv;
-      
-      // Calculate rebateable investment (min of total investment or allowable investment)
-      const rebateableInvestment = Math.min(totalInvestment, allowableInvestment);
       
       // Set tax-free threshold based on gender
       const taxFreeThreshold = (gender === "Female" || gender === "Senior Citizen") ? 400000 : 350000;
@@ -293,25 +305,46 @@
       // Round tax
       tax = Math.round(tax);
       
-      // Calculate rebate (15% of rebateable investment)
-      const rebate = Math.round((rebateableInvestment * 0.15));
+      // Calculate allowable investment (20% of taxable income)
+      const allowableInvestment = Math.round(taxableIncome * 0.20);
+      
+      // Calculate total investment
+      const totalInvestment = savings + dps + lip + share + rpf + otherInv;
+      
+      // Calculate rebateable investment (min of total investment or allowable investment)
+      const rebateableInvestment = Math.min(totalInvestment, allowableInvestment);
+      
+      // Calculate maximum possible rebate (minimum of 15% of rebateable investment OR 3% of taxable income)
+      const rebatePercentage = Math.round(allowableInvestment * 0.15); // 15% of max possible investment
+      const rebateFixed = Math.round(taxableIncome * 0.03); // 3% of taxable income
+      const maxPossibleRebate = Math.min(rebatePercentage, rebateFixed, 1000000);
+      console.log(maxPossibleRebate);
+      
+      // Calculate actual rebate based on user's investment
+      const actualRebate = Math.round(rebateableInvestment * 0.15);
+      const rebate = Math.min(actualRebate, maxPossibleRebate);
       
       // Check if minimum tax should apply (only if taxable income exceeds the threshold)
       const shouldApplyMinimumTax = taxableIncome > taxFreeThreshold;
       
-      // Calculate final tax after rebate
-      const taxAfterRebate = Math.max(tax - rebate, 0);
-      const finalTax = shouldApplyMinimumTax ? Math.max(taxAfterRebate, minimumTax) : taxAfterRebate;
-      
       // Calculate tax without investment
       const taxWithoutInvestment = shouldApplyMinimumTax ? Math.max(tax, minimumTax) : tax;
       
+      // Calculate tax with actual investment
+      const actualTaxAfterRebate = Math.max(tax - rebate, 0);
+      const actualFinalTax = shouldApplyMinimumTax ? Math.max(actualTaxAfterRebate, minimumTax) : actualTaxAfterRebate;
+      
+      // Calculate tax with maximum possible investment
+      const maxTaxAfterRebate = Math.max(tax - maxPossibleRebate, 0);
+      const maxPossibleFinalTax = shouldApplyMinimumTax ? Math.max(maxTaxAfterRebate, minimumTax) : maxTaxAfterRebate;
+      
       // Calculate monthly tax
-      const monthlyTaxWithInvestment = Math.round(finalTax / 12);
+      const monthlyTaxWithInvestment = Math.round(actualFinalTax / 12);
       const monthlyTaxWithoutInvestment = Math.round(taxWithoutInvestment / 12);
+      const monthlyTaxWithMaxInvestment = Math.round(maxPossibleFinalTax / 12);
 
       // Create notice if minimum tax is applied
-      const notice = shouldApplyMinimumTax && (finalTax <= minimumTax && finalTax > 0) ? 
+      const notice = shouldApplyMinimumTax && (actualFinalTax <= minimumTax && actualFinalTax > 0) ? 
         '<div class="notice">Minimum tax of BDT 5,000 is applied as per government rules for taxable income exceeding the threshold.</div>' : "";
 
       // Display results
@@ -320,11 +353,11 @@
         ${notice}
         <div class="summary">
           <div class="summary-item">
-            <div>Annual Tax</div>
-            <div class="summary-value">BDT ${finalTax.toLocaleString()}</div>
+            <div>Your Annual Tax</div>
+            <div class="summary-value">BDT ${actualFinalTax.toLocaleString()}</div>
           </div>
           <div class="summary-item">
-            <div>Monthly Tax</div>
+            <div>Your Monthly Tax</div>
             <div class="summary-value">BDT ${monthlyTaxWithInvestment.toLocaleString()}</div>
           </div>
         </div>
@@ -338,26 +371,22 @@
           <tr><th>Allowable Investment (20% of Taxable Income)</th><td>BDT ${allowableInvestment.toLocaleString()}</td></tr>
           <tr><th>Total Investment</th><td>BDT ${totalInvestment.toLocaleString()}</td></tr>
           <tr><th>Rebateable Investment</th><td>BDT ${rebateableInvestment.toLocaleString()} ${totalInvestment > allowableInvestment ? '<span class="notice" style="font-size: 12px; padding: 2px 5px; margin: 0;">(Limited to 20% of taxable income)</span>' : ''}</td></tr>
-          <tr><th>Rebate (15%)</th><td>BDT ${rebate.toLocaleString()}</td></tr>
+          <tr><th>Maximum Rebate (lower of 3% of taxable income or 15% of investment)</th><td>BDT ${maxPossibleRebate.toLocaleString()}</td></tr>
+          <tr><th>Actual Rebate Based on Your Investment</th><td>BDT ${rebate.toLocaleString()}</td></tr>
         </table>
 
-        <h3>👉 With Investment</h3>
+        <h3>👉 Tax With Maximum Investment</h3>
         <table class="result-table">
-          <tr class="highlight"><th>Final Payable Tax</th><td>BDT ${finalTax.toLocaleString()}</td></tr>
-          <tr><th>Monthly Tax</th><td>BDT ${monthlyTaxWithInvestment.toLocaleString()}</td></tr>
+          <tr class="highlight"><th>Final Payable Tax (with max possible investment)</th><td>BDT ${maxPossibleFinalTax.toLocaleString()}</td></tr>
+          <tr><th>Monthly Tax</th><td>BDT ${monthlyTaxWithMaxInvestment.toLocaleString()}</td></tr>
         </table>
 
-        <h3>👉 Without Investment</h3>
+        <h3>👉 Tax Without Investment</h3>
         <table class="result-table">
           <tr class="highlight"><th>Final Payable Tax</th><td>BDT ${taxWithoutInvestment.toLocaleString()}</td></tr>
           <tr><th>Monthly Tax</th><td>BDT ${monthlyTaxWithoutInvestment.toLocaleString()}</td></tr>
         </table>
       `;
-      
-      // Apply layout changes
-      document.getElementById("mainContainer").classList.add("has-result");
-      document.getElementById("inputContainer").classList.add("shifted");
-      document.getElementById("resultContainer").style.display = "block";
     }
   </script>
 </body>
