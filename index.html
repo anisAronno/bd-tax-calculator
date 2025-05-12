@@ -4,30 +4,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bangladesh Income Tax Calculator</title>
     <!-- Primary Meta Tags -->
-    <meta name="description" content="Calculate your income tax in Bangladesh with this easy-to-use calculator. Supports various income sources, investment rebates, and tax slabs for different categories." />
-    <meta name="keywords" content="Bangladesh tax calculator, income tax Bangladesh, tax calculation, investment rebate, tax slabs Bangladesh, BD tax calculator, tax rebate calculator" />
+    <meta
+      name="description"
+      content="Calculate your income tax in Bangladesh with this easy-to-use calculator. Supports various income sources, investment rebates, and tax slabs for different categories."
+    />
+    <meta
+      name="keywords"
+      content="Bangladesh tax calculator, income tax Bangladesh, tax calculation, investment rebate, tax slabs Bangladesh, BD tax calculator, tax rebate calculator"
+    />
     <meta name="author" content="Tax Calculator BD" />
     <meta name="robots" content="index, follow" />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Bangladesh Income Tax Calculator" />
-    <meta property="og:description" content="Calculate your income tax in Bangladesh with this easy-to-use calculator. Supports various income sources and investment rebates." />
+    <meta
+      property="og:description"
+      content="Calculate your income tax in Bangladesh with this easy-to-use calculator. Supports various income sources and investment rebates."
+    />
     <meta property="og:image" content="/logo.png" />
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Bangladesh Income Tax Calculator" />
-    <meta name="twitter:description" content="Calculate your income tax in Bangladesh with this easy-to-use calculator." />
-    
+    <meta
+      name="twitter:description"
+      content="Calculate your income tax in Bangladesh with this easy-to-use calculator."
+    />
+
     <!-- Mobile Specific -->
     <meta name="theme-color" content="#2b6777" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="#2b6777" />
-    
+
     <!-- Cache Control -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -127,11 +142,15 @@
         margin-top: 20px;
       }
       .summary {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        justify-content: center;
+        align-items: center;
+        text-align: center;
         margin-top: 20px;
         background: #e8f5e9;
-        padding: 15px;
+        padding: 10px;
         border-radius: 8px;
       }
       .summary-item {
@@ -155,25 +174,25 @@
           width: 100%;
           margin-bottom: 20px;
         }
-      }
-      @media (min-width: 991px) {
-        .result-table td {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          max-width: 0;
-          width: auto;
-          min-width: 200px;
-        }
-
         .summary-value {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          max-width: 0;
-          width: auto;
-          min-width: 200px;
+          font-size: 20px;
         }
+      }
+      .result-table td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 0;
+        width: auto;
+        min-width: 100px;
+      }
+
+      .summary-value {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: auto;
+        min-width: 100px;
       }
     </style>
   </head>
