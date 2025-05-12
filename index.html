@@ -178,21 +178,23 @@
           font-size: 20px;
         }
       }
-      .result-table td {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 0;
-        width: auto;
-        min-width: 100px;
-      }
+      @media (min-width: 991px) {
+        .result-table td {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 0;
+          width: auto;
+          min-width: 200px;
+        }
 
-      .summary-value {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: auto;
-        min-width: 100px;
+        .summary-value {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: auto;
+          min-width: 200px;
+        }
       }
     </style>
   </head>
@@ -214,6 +216,8 @@
             id="salary"
             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             placeholder="Enter monthly salary"
+            max="100000000"
+            onchange="validateInput(this, 100000000)"
             required
           />
 
@@ -223,6 +227,8 @@
             id="festival"
             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             placeholder="Enter festival bonus"
+            max="100000000"
+            onchange="validateInput(this, 100000000)"
           />
 
           <label for="otherIncome">Other Income:</label>
@@ -231,6 +237,8 @@
             id="otherIncome"
             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             placeholder="Enter other income"
+            max="100000000"
+            onchange="validateInput(this, 100000000)"
           />
 
           <label>Investment Breakdown:</label>
@@ -260,6 +268,8 @@
             id="lip"
             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             placeholder="Enter LIP amount"
+            max="1000000"
+            onchange="validateInput(this, 1000000)"
           />
 
           <label for="share">Share Market:</label>
@@ -268,6 +278,8 @@
             id="share"
             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
             placeholder="Enter share market investment"
+            max="1000000"
+            onchange="validateInput(this, 1000000)"
           />
 
           <label for="rpf">Self & Employer's Contrib. to RPF:</label>
@@ -278,6 +290,8 @@
             type="text"
             id="otherInv"
             placeholder="Enter other investments"
+            max="1000000"
+            onchange="validateInput(this, 1000000)"
           />
 
           <button onclick="calculateTax()">Calculate Tax</button>
