@@ -371,7 +371,7 @@
                 BDT {{ formatNumber(results.tax || 0) }}
               </td>
             </tr>
-            <tr>
+            <tr class="bg-teal-50 font-semibold">
               <th colspan="2" class="p-3 text-left border border-gray-200">
                 Less: Investment Rebate
               </th>
@@ -387,7 +387,7 @@
                 BDT {{ formatNumber(results.actualFinalTax || 0) }}
               </td>
             </tr>
-            <tr>
+            <tr class="bg-teal-100 font-bold">
               <th colspan="2" class="p-3 text-left border border-gray-200">
                 Monthly Tax Payable
               </th>
@@ -460,7 +460,7 @@
       </div>
     </div>
 
-    <footer class="mt-4 md:mt-6 py-8 bg-teal-700 text-white rounded-xl">
+    <footer class="mt-4 md:mt-6 py-8 bg-teal-700 text-white md:rounded-xl">
       <div
         class="flex flex-col md:flex-row justify-around items-center max-w-7xl mx-auto px-5"
       >
