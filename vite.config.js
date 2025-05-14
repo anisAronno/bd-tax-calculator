@@ -1,0 +1,85 @@
+import tailwindcss from '@tailwindcss/vite';
+import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite';
+
+import { VitePWA } from 'vite-plugin-pwa';
+
+export default defineConfig({
+    plugins: [vue(), tailwindcss(), VitePWA({
+        registerType: 'autoUpdate',
+        devOptions: { enabled: true },
+        workbox: {
+            globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        },
+        manifest: {
+            id: '/',
+            name: 'BD Tax Calculator..',
+            short_name: 'Tax Calc..',
+            start_url: '/',
+            description: 'Calculate your income tax in Bangladesh',
+            theme_color: '#2b6777',
+            background_color: '#f4f8fb',
+            display: 'standalone',
+            version: '1.0.0',
+            icons: [
+                {
+                    "src": "logo.png",
+                    "sizes": "72x72",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "logo.png",
+                    "sizes": "96x96",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "logo.png",
+                    "sizes": "128x128",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "logo.png",
+                    "sizes": "144x144",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "logo.png",
+                    "sizes": "192x192",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "logo.png",
+                    "sizes": "512x512",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "logo.png",
+                    "sizes": "1024x1024",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                },
+                {
+                    "src": "logo.png",
+                    "sizes": "2048x2048",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                }
+            ]
+        },
+    })],
+    server: {
+        port: 3000,
+        open: true,
+    },
+    resolve: {
+        alias: {
+            '@': '/src',
+        },
+    },
+});
