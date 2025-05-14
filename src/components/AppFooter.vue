@@ -46,7 +46,7 @@
       are done entirely in your browser.
     </div>
     <div class="text-center mt-5 pt-2.5 border-t border-white/20 text-sm">
-      © {{ new Date().getFullYear() }} Bangladesh Tax Calculator. All rights
+      © {{ new Date().getFullYear() }} BD Tax Calculator. All rights
       reserved.
     </div>
   </footer>

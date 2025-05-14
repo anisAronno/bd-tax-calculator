@@ -3,8 +3,8 @@
   <header class="bg-gradient-to-r from-teal-600 to-teal-800 shadow-lg">
     <div class="container mx-auto px-2 py-2 :md:px-4 md:py-6">
       <div class="text-center">
-        <h1 class="text-xl md:text-3xl font-bold text-white">
-          Bangladeshi Income Tax Calculator
+        <h1 class="text-2xl md:text-3xl font-bold text-white">
+          Tax Calculator for Bangladesh
         </h1>
         <p class="text-teal-100 text-xs md:text-base">
           Accurately estimate your personal income tax based on the latest tax
