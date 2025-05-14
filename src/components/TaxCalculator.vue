@@ -197,7 +197,7 @@
 
         <div class="bg-green-50 p-4 rounded-lg my-5 animate-pulse-slow">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
-            <div>
+            <div class="annual-tax-highlight">
               <div>Your Annual Tax</div>
               <div class="text-2xl font-bold text-teal-700 mt-1">
                 BDT {{ formatNumber(results.actualFinalTax || 0) }}
@@ -541,14 +541,14 @@ export default {
         annualIncome = parseFloat(this.annualIncomeInput) || 0;
         if (!annualIncome) {
           alert("Annual income is required");
-         this.isCalculating = false;
+          this.isCalculating = false;
           return;
         }
       } else {
         const salary = parseFloat(this.salary) || 0;
         if (!salary) {
           alert("Monthly salary is required");
-           this.isCalculating = false;
+          this.isCalculating = false;
           return;
         }
         const festival = parseFloat(this.festival) || 0;
@@ -803,6 +803,11 @@ export default {
         taxSlabs,
       };
       this.isCalculating = false;
+    // Scroll to results section
+    const resultElement = document.querySelector('.annual-tax-highlight');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     },
   },
   // Initialize results with default values when component is created
