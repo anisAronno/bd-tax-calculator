@@ -26,50 +26,58 @@ export default defineConfig({
                     "src": "logo.png",
                     "sizes": "72x72",
                     "type": "image/png",
-                    "purpose": "any maskable"
                 },
                 {
                     "src": "logo.png",
                     "sizes": "96x96",
                     "type": "image/png",
-                    "purpose": "any maskable"
                 },
                 {
                     "src": "logo.png",
                     "sizes": "128x128",
                     "type": "image/png",
-                    "purpose": "any maskable"
                 },
                 {
                     "src": "logo.png",
                     "sizes": "144x144",
                     "type": "image/png",
-                    "purpose": "any maskable"
                 },
                 {
                     "src": "logo.png",
                     "sizes": "192x192",
                     "type": "image/png",
-                    "purpose": "any maskable"
                 },
                 {
                     "src": "logo.png",
                     "sizes": "512x512",
                     "type": "image/png",
-                    "purpose": "any maskable"
                 },
                 {
                     "src": "logo.png",
                     "sizes": "1024x1024",
                     "type": "image/png",
-                    "purpose": "any maskable"
                 },
                 {
                     "src": "logo.png",
                     "sizes": "2048x2048",
                     "type": "image/png",
-                    "purpose": "any maskable"
                 }
+            ],
+            "screenshots": [
+              {
+                "src": "logo.png",
+                "sizes": "320x640",
+                "type": "image/png",
+                "form_factor": "narrow",
+                "label": "Tax Calculator Home Screen"
+              },
+              {
+                "src": "logo.png",
+                "sizes": "720x1280",
+                "type": "image/png",
+                "form_factor": "wide",
+                "label": "Tax Calculator Desktop View"
+              }
             ]
         },
     })],
