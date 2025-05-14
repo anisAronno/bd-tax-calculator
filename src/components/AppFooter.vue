@@ -41,7 +41,7 @@
         </a>
       </div>
     </div>
-    <div class="text-center mt-5 pt-2.5 border-t border-white/20 text-sm">
+    <div class="text-center mt-5 pt-2.5 border-t border-white/20 text-sm px-1">
       ⚡ <strong>Note:</strong> Your data is not saved anywhere – calculations
       are done entirely in your browser.
     </div>
