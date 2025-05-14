@@ -1,8 +1,8 @@
 <template>
   <div class="max-w-7xl mx-auto md:p-5">
     <AppHeader />
-    <div class="flex flex-col lg:flex-row gap-8 justify-between mt-3 md:mt-5">
-      <div class="w-full lg:w-1/2 bg-white p-5 md:p-8 rounded-xl shadow-md">
+    <div class="flex flex-col lg:flex-row gap-8 justify-between mt-2 md:mt-5">
+      <div class="w-full lg:w-1/2 bg-white p-4 md:p-8 rounded-xl shadow-md">
         <!-- Input Type Switch -->
         <div class="my-5">
           <div class="flex border border-teal-100 rounded-lg overflow-hidden">
@@ -182,7 +182,7 @@
         </button>
       </div>
 
-      <div class="w-full lg:w-1/2 bg-white p-8 rounded-xl shadow-md">
+      <div class="w-full lg:w-1/2 bg-white p-4 md:p-8 rounded-xl shadow-md">
         <h2 class="text-2xl font-bold text-center text-teal-700 mb-6">
           Tax Calculation Results
         </h2>
@@ -390,7 +390,7 @@
                 BDT {{ formatNumber(results.actualFinalTax || 0) }}
               </td>
             </tr>
-            <tr class="bg-teal-100 font-bold">
+            <tr class="bg-teal-50 font-semibold">
               <th colspan="2" class="p-3 text-left border border-gray-200">
                 Monthly Tax Payable
               </th>
@@ -468,7 +468,6 @@
       </div>
     </div>
     <AppFooter />
-
   </div>
 </template>
 
@@ -498,7 +497,7 @@ export default {
   },
   components: {
     AppHeader,
-    AppFooter
+    AppFooter,
   },
   methods: {
     validateInput(field, maxValue) {

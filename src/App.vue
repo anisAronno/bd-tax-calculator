@@ -1,7 +1,11 @@
 <script setup>
 import TaxCalculator from './components/TaxCalculator.vue';
+import { Analytics } from '@vercel/analytics/vue';
 </script>
 
 <template>
-  <TaxCalculator />
+  <div>
+    <Analytics />
+    <TaxCalculator />
+  </div>
 </template>

@@ -1,9 +1,5 @@
 <template>
   <footer class="mt-4 md:mt-6 py-8 bg-teal-700 text-white md:rounded-xl">
-    <div class="text-center text-sm mb-2">
-      ⚡ <strong>Note:</strong> Your data is not saved anywhere – calculations
-      are done entirely in your browser.
-    </div>
     <div
       class="flex flex-col md:flex-row justify-around items-center max-w-7xl mx-auto px-5"
     >
@@ -45,8 +41,12 @@
         </a>
       </div>
     </div>
+    <div class="text-center mt-5 pt-2.5 border-t border-white/20 text-sm px-2">
+      ⚡ <strong>Note:</strong> Your data is not saved anywhere – calculations
+      are done entirely in your browser.
+    </div>
     <div class="text-center mt-5 pt-2.5 border-t border-white/20 text-sm">
-      © {{ new Date().getFullYear() }} Bangladesh Tax Calculator. All rights
+      © {{ new Date().getFullYear() }} BD Tax Calculator. All rights
       reserved.
     </div>
   </footer>
