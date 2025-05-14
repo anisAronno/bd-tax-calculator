@@ -217,6 +217,7 @@
         <table
           class="w-full mt-4 border-collapse shadow-sm rounded-lg overflow-hidden"
         >
+          <tbody>
           <tr>
             <th
               class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
@@ -319,6 +320,7 @@
               BDT {{ formatNumber(results.rebate || 0) }}
             </td>
           </tr>
+          </tbody>
         </table>
 
         <!-- Tax Breakdown Table (shown when tax is ≥5000) -->
@@ -331,6 +333,7 @@
           <table
             class="w-full mt-4 border-collapse shadow-sm rounded-lg overflow-hidden"
           >
+            <tbody>
             <tr>
               <th
                 class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
@@ -395,6 +398,7 @@
                 BDT {{ formatNumber(results.monthlyTaxWithInvestment || 0) }}
               </td>
             </tr>
+            </tbody>
           </table>
         </div>
 
@@ -406,6 +410,7 @@
         <table
           class="w-full mt-4 border-collapse shadow-sm rounded-lg overflow-hidden"
         >
+          <tbody>
           <tr class="bg-green-50">
             <th
               class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
@@ -426,6 +431,7 @@
               BDT {{ formatNumber(results.monthlyTaxWithMaxInvestment || 0) }}
             </td>
           </tr>
+          </tbody>
         </table>
 
         <h3
@@ -436,6 +442,7 @@
         <table
           class="w-full mt-4 border-collapse shadow-sm rounded-lg overflow-hidden"
         >
+          <tbody>
           <tr class="bg-green-50">
             <th
               class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
@@ -456,11 +463,12 @@
               BDT {{ formatNumber(results.monthlyTaxWithoutInvestment || 0) }}
             </td>
           </tr>
+          </tbody>
         </table>
       </div>
     </div>
     <AppFooter />
-    
+
   </div>
 </template>
 
