@@ -1,5 +1,10 @@
 {
   "name": "tax-calculator",
+  "author": {
+    "name": "Anichur Rahaman",
+    "email": "contact@anichur.com",
+    "url": "https://anichur.com"
+  },
   "private": true,
   "version": "0.0.0",
   "type": "module",

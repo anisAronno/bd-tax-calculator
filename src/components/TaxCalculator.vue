@@ -173,12 +173,15 @@
         <button
           @click="calculateTax"
           class="w-full bg-teal-700 text-white py-3 px-5 mt-6 rounded-lg flex justify-center items-center transition-all duration-300 hover:bg-teal-800 hover:-translate-y-0.5 active:translate-y-0 relative overflow-hidden cursor-pointer"
+          :disabled="isCalculating"
         >
-          <span>Calculate Tax</span>
+          <span>{{ isCalculating ? "Calculating..." : "Calculate Tax" }}</span>
           <span
+            v-if="!isCalculating"
             class="ml-2.5 transition-transform duration-300 group-hover:translate-x-1"
             >→</span
           >
+          <span v-else class="ml-2.5 inline-block animate-spin">↻</span>
         </button>
       </div>
 
@@ -194,7 +197,7 @@
 
         <div class="bg-green-50 p-4 rounded-lg my-5 animate-pulse-slow">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
-            <div>
+            <div class="annual-tax-highlight">
               <div>Your Annual Tax</div>
               <div class="text-2xl font-bold text-teal-700 mt-1">
                 BDT {{ formatNumber(results.actualFinalTax || 0) }}
@@ -217,108 +220,110 @@
         <table
           class="w-full mt-4 border-collapse shadow-sm rounded-lg overflow-hidden"
         >
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Total Annual Income
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.annualIncome || 0) }}
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Exempted Income
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.exemption || 0) }}
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Taxable Income
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.taxableIncome || 0) }}
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Tax-Free Threshold ({{ gender }})
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.taxFreeThreshold || 0) }}
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Allowable Investment
-              <span class="text-xs text-blue-800 italic"
-                >(20% of Taxable Income)</span
+          <tbody>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
               >
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.allowableInvestment || 0) }}
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Total Investment
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.totalInvestment || 0) }}
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Rebateable Investment
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.rebateableInvestment || 0) }}
-              <span
-                v-if="results.totalInvestment > results.allowableInvestment"
-                class="bg-yellow-50 text-yellow-800 py-0.5 px-1.5 text-xs rounded ml-1.5"
+                Total Annual Income
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.annualIncome || 0) }}
+              </td>
+            </tr>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
               >
-                (Limited to 20% of taxable income)
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Maximum Rebate
-              <span class="text-xs text-blue-800 italic"
-                >(lower of 3% of taxable income or 15% of investment)</span
+                Exempted Income
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.exemption || 0) }}
+              </td>
+            </tr>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
               >
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.maxPossibleRebate || 0) }}
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Actual Rebate Based on Your Investment
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.rebate || 0) }}
-            </td>
-          </tr>
+                Taxable Income
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.taxableIncome || 0) }}
+              </td>
+            </tr>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+              >
+                Tax-Free Threshold ({{ gender }})
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.taxFreeThreshold || 0) }}
+              </td>
+            </tr>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+              >
+                Allowable Investment
+                <span class="text-xs text-blue-800 italic"
+                  >(20% of Taxable Income)</span
+                >
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.allowableInvestment || 0) }}
+              </td>
+            </tr>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+              >
+                Total Investment
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.totalInvestment || 0) }}
+              </td>
+            </tr>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+              >
+                Rebateable Investment
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.rebateableInvestment || 0) }}
+                <span
+                  v-if="results.totalInvestment > results.allowableInvestment"
+                  class="bg-yellow-50 text-yellow-800 py-0.5 px-1.5 text-xs rounded ml-1.5"
+                >
+                  (Limited to 20% of taxable income)
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+              >
+                Maximum Rebate
+                <span class="text-xs text-blue-800 italic"
+                  >(lower of 3% of taxable income or 15% of investment)</span
+                >
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.maxPossibleRebate || 0) }}
+              </td>
+            </tr>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+              >
+                Actual Rebate Based on Your Investment
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.rebate || 0) }}
+              </td>
+            </tr>
+          </tbody>
         </table>
 
         <!-- Tax Breakdown Table (shown when tax is ≥5000) -->
@@ -331,70 +336,72 @@
           <table
             class="w-full mt-4 border-collapse shadow-sm rounded-lg overflow-hidden"
           >
-            <tr>
-              <th
-                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+            <tbody>
+              <tr>
+                <th
+                  class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+                >
+                  Income Range
+                </th>
+                <th
+                  class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+                >
+                  Rate
+                </th>
+                <th
+                  class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+                >
+                  Calculated Tax
+                </th>
+              </tr>
+              <tr
+                v-for="(slab, index) in results.taxSlabs || []"
+                :key="index"
+                :class="index % 2 === 1 ? 'bg-teal-50/20' : ''"
               >
-                Income Range
-              </th>
-              <th
-                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-              >
-                Rate
-              </th>
-              <th
-                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-              >
-                Calculated Tax
-              </th>
-            </tr>
-            <tr
-              v-for="(slab, index) in results.taxSlabs || []"
-              :key="index"
-              :class="index % 2 === 1 ? 'bg-teal-50/20' : ''"
-            >
-              <td class="p-3 text-left border border-gray-200">
-                {{ slab.range }}
-              </td>
-              <td class="p-3 text-left border border-gray-200">
-                {{ slab.rate }}%
-              </td>
-              <td class="p-3 text-left border border-gray-200">
-                BDT {{ formatNumber(slab.tax) }}
-              </td>
-            </tr>
-            <tr class="bg-teal-100 font-bold">
-              <th colspan="2" class="p-3 text-left border border-gray-200">
-                Total Tax Before Rebate
-              </th>
-              <td class="p-3 text-left border border-gray-200">
-                BDT {{ formatNumber(results.tax || 0) }}
-              </td>
-            </tr>
-            <tr class="bg-teal-50 font-semibold">
-              <th colspan="2" class="p-3 text-left border border-gray-200">
-                Less: Investment Rebate
-              </th>
-              <td class="p-3 text-left border border-gray-200">
-                BDT {{ formatNumber(results.rebate || 0) }}
-              </td>
-            </tr>
-            <tr class="bg-teal-100 font-bold">
-              <th colspan="2" class="p-3 text-left border border-gray-200">
-                Net Tax Payable
-              </th>
-              <td class="p-3 text-left border border-gray-200">
-                BDT {{ formatNumber(results.actualFinalTax || 0) }}
-              </td>
-            </tr>
-            <tr class="bg-teal-50 font-semibold">
-              <th colspan="2" class="p-3 text-left border border-gray-200">
-                Monthly Tax Payable
-              </th>
-              <td class="p-3 text-left border border-gray-200">
-                BDT {{ formatNumber(results.monthlyTaxWithInvestment || 0) }}
-              </td>
-            </tr>
+                <td class="p-3 text-left border border-gray-200">
+                  {{ slab.range }}
+                </td>
+                <td class="p-3 text-left border border-gray-200">
+                  {{ slab.rate }}%
+                </td>
+                <td class="p-3 text-left border border-gray-200">
+                  BDT {{ formatNumber(slab.tax) }}
+                </td>
+              </tr>
+              <tr class="bg-teal-100 font-bold">
+                <th colspan="2" class="p-3 text-left border border-gray-200">
+                  Total Tax Before Rebate
+                </th>
+                <td class="p-3 text-left border border-gray-200">
+                  BDT {{ formatNumber(results.tax || 0) }}
+                </td>
+              </tr>
+              <tr class="bg-teal-50 font-semibold">
+                <th colspan="2" class="p-3 text-left border border-gray-200">
+                  Less: Investment Rebate
+                </th>
+                <td class="p-3 text-left border border-gray-200">
+                  BDT {{ formatNumber(results.rebate || 0) }}
+                </td>
+              </tr>
+              <tr class="bg-teal-100 font-bold">
+                <th colspan="2" class="p-3 text-left border border-gray-200">
+                  Net Tax Payable
+                </th>
+                <td class="p-3 text-left border border-gray-200">
+                  BDT {{ formatNumber(results.actualFinalTax || 0) }}
+                </td>
+              </tr>
+              <tr class="bg-teal-50 font-semibold">
+                <th colspan="2" class="p-3 text-left border border-gray-200">
+                  Monthly Tax Payable
+                </th>
+                <td class="p-3 text-left border border-gray-200">
+                  BDT {{ formatNumber(results.monthlyTaxWithInvestment || 0) }}
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
 
@@ -406,26 +413,28 @@
         <table
           class="w-full mt-4 border-collapse shadow-sm rounded-lg overflow-hidden"
         >
-          <tr class="bg-green-50">
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Final Payable Tax (with max possible investment)
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.maxPossibleFinalTax || 0) }}
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Monthly Tax
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.monthlyTaxWithMaxInvestment || 0) }}
-            </td>
-          </tr>
+          <tbody>
+            <tr class="bg-green-50">
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+              >
+                Final Payable Tax (with max possible investment)
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.maxPossibleFinalTax || 0) }}
+              </td>
+            </tr>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+              >
+                Monthly Tax
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.monthlyTaxWithMaxInvestment || 0) }}
+              </td>
+            </tr>
+          </tbody>
         </table>
 
         <h3
@@ -436,26 +445,28 @@
         <table
           class="w-full mt-4 border-collapse shadow-sm rounded-lg overflow-hidden"
         >
-          <tr class="bg-green-50">
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Final Payable Tax
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.taxWithoutInvestment || 0) }}
-            </td>
-          </tr>
-          <tr>
-            <th
-              class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
-            >
-              Monthly Tax
-            </th>
-            <td class="p-3 text-left border border-gray-200">
-              BDT {{ formatNumber(results.monthlyTaxWithoutInvestment || 0) }}
-            </td>
-          </tr>
+          <tbody>
+            <tr class="bg-green-50">
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+              >
+                Final Payable Tax
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.taxWithoutInvestment || 0) }}
+              </td>
+            </tr>
+            <tr>
+              <th
+                class="bg-teal-100 text-teal-700 p-3 text-left border border-gray-200"
+              >
+                Monthly Tax
+              </th>
+              <td class="p-3 text-left border border-gray-200">
+                BDT {{ formatNumber(results.monthlyTaxWithoutInvestment || 0) }}
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -485,6 +496,7 @@ export default {
       calculated: true, // Changed to true to always show the result section
       results: {}, // Default empty results
       notice: "",
+      isCalculating: false,
     };
   },
   components: {
@@ -517,7 +529,10 @@ export default {
     formatNumber(number) {
       return (number || 0).toLocaleString();
     },
-    calculateTax() {
+    async calculateTax() {
+      this.isCalculating = true;
+      await new Promise((resolve) => setTimeout(resolve, 50));
+
       // Basic inputs
       const gender = this.gender;
       let annualIncome;
@@ -526,12 +541,14 @@ export default {
         annualIncome = parseFloat(this.annualIncomeInput) || 0;
         if (!annualIncome) {
           alert("Annual income is required");
+          this.isCalculating = false;
           return;
         }
       } else {
         const salary = parseFloat(this.salary) || 0;
         if (!salary) {
           alert("Monthly salary is required");
+          this.isCalculating = false;
           return;
         }
         const festival = parseFloat(this.festival) || 0;
@@ -785,6 +802,12 @@ export default {
         monthlyTaxWithMaxInvestment,
         taxSlabs,
       };
+      this.isCalculating = false;
+    // Scroll to results section
+    const resultElement = document.querySelector('.annual-tax-highlight');
+      if (resultElement) {
+        resultElement.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
     },
   },
   // Initialize results with default values when component is created
