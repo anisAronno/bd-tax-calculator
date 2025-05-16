@@ -521,9 +521,9 @@ export default {
 
       // Check if value exceeds maximum
       const value = parseFloat(this.annualIncomeInput) || 0;
-      if (value > 100000000) {
-        alert("Maximum allowed value is 100,000,000");
-        this.annualIncomeInput = "100000000";
+      if (value > 1000000000) {
+        alert("Maximum allowed value is 1000,000,000");
+        this.annualIncomeInput = "1000000000";
       }
     },
     formatNumber(number) {
