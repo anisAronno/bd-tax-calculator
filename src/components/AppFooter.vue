@@ -19,6 +19,49 @@
         </a>
       </div>
       <div class="text-center py-4">
+        <h4 class="mb-4 font-semibold text-lg">Mobile Finance Service</h4>
+        <div class="mb-4 p-3 bg-white/5 rounded-lg border border-white/10">
+          <p class="text-xs text-gray-300 mb-1">Personal Account <span class="text-xs text-gray-400 mt-3 italic">(send money)</span></p>
+        <a 
+            href="https://wa.me/8801816366535" 
+            class="font-mono text-xl text-white font-medium tracking-wider hover:text-yellow-300 transition-colors duration-300"
+        >
+            01816366535
+        </a>
+        
+        </div>
+        <div class="flex justify-center gap-3 flex-wrap">
+          <!-- bKash -->
+          <div
+            class="group flex items-center gap-2 bg-gradient-to-r from-pink-500/20 to-pink-600/20 hover:from-pink-500/30 hover:to-pink-600/30 px-4 py-3 rounded-lg border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300 hover:scale-105"
+          >
+            <img src="/bkash.png" alt="bKash" class="w-8 h-8 object-contain" />
+            <span class="text-sm font-medium">bKash</span>
+          </div>
+
+          <!-- Nagad -->
+          <div
+            class="group flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 hover:to-red-600/30 px-4 py-3 rounded-lg border border-red-500/20 hover:border-red-500/40 transition-all duration-300 hover:scale-105"
+          >
+            <img src="/nagad.png" alt="Nagad" class="w-8 h-8 object-contain" />
+            <span class="text-sm font-medium">Nagad</span>
+          </div>
+
+          <!-- Rocket -->
+          <div
+            class="group flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-purple-600/20 hover:from-purple-500/30 hover:to-purple-600/30 px-4 py-3 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:scale-105"
+          >
+            <img
+              src="/rocket.png"
+              alt="Rocket"
+              class="w-8 h-8 object-contain"
+            />
+            <span class="text-sm font-medium">Rocket</span>
+          </div>
+        </div>
+        
+      </div>
+      <div class="text-center py-4">
         <h4 class="mb-4 font-semibold text-lg">Contribute on GitHub</h4>
         <a
           href="https://github.com/anisAronno/bd-tax-calculator"
@@ -46,8 +89,7 @@
       are done entirely in your browser.
     </div>
     <div class="text-center mt-5 pt-2.5 border-t border-white/20 text-sm">
-      © {{ new Date().getFullYear() }} BD Tax Calculator. All rights
-      reserved.
+      © {{ new Date().getFullYear() }} BD Tax Calculator. All rights reserved.
     </div>
   </footer>
 </template>
