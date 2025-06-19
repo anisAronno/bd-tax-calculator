@@ -5,61 +5,82 @@
     >
       <div class="text-center py-4">
         <h4 class="mb-4 font-semibold text-lg">Support the Developer</h4>
-        <a
-          href="https://www.buymeacoffee.com/anisAronno"
-          target="_blank"
-          class="inline-block transition-transform duration-300 hover:scale-105"
+
+        <div
+          class="flex flex-col lg:flex-row gap-6 justify-center items-center md:items-start"
         >
-          <img
-            src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
-            height="50"
-            width="210"
-            alt="anisAronno"
-          />
-        </a>
-      </div>
-      <div class="text-center py-4">
-        <h4 class="mb-4 font-semibold text-lg">Mobile Finance Service</h4>
-        <div class="mb-4 p-3 bg-white/5 rounded-lg border border-white/10">
-          <p class="text-xs text-gray-300 mb-1">Personal Account <span class="text-xs text-gray-400 mt-3 italic">(send money)</span></p>
-        <a 
-            href="https://wa.me/8801816366535" 
-            class="font-mono text-xl text-white font-medium tracking-wider hover:text-yellow-300 transition-colors duration-300"
-        >
-            01816366535
-        </a>
-        
-        </div>
-        <div class="flex justify-center gap-3 flex-wrap">
-          <!-- bKash -->
-          <div
-            class="group flex items-center gap-2 bg-gradient-to-r from-pink-500/20 to-pink-600/20 hover:from-pink-500/30 hover:to-pink-600/30 px-4 py-3 rounded-lg border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300 hover:scale-105"
-          >
-            <img src="/bkash.png" alt="bKash" class="w-8 h-8 object-contain" />
-            <span class="text-sm font-medium">bKash</span>
+          <!-- Buy Me Coffee Option -->
+          <div class="flex flex-col items-center">
+            <p class="text-sm text-gray-200 mb-2">☕ International</p>
+            <a
+              href="https://www.buymeacoffee.com/anisAronno"
+              target="_blank"
+              class="inline-block transition-transform duration-300 hover:scale-105"
+            >
+              <img
+                src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+                height="40"
+                width="168"
+                alt="anisAronno"
+              />
+            </a>
           </div>
 
-          <!-- Nagad -->
-          <div
-            class="group flex items-center gap-2 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 hover:to-red-600/30 px-4 py-3 rounded-lg border border-red-500/20 hover:border-red-500/40 transition-all duration-300 hover:scale-105"
-          >
-            <img src="/nagad.png" alt="Nagad" class="w-8 h-8 object-contain" />
-            <span class="text-sm font-medium">Nagad</span>
-          </div>
+          <!-- Mobile Finance Service Option -->
+          <div class="flex flex-col items-center">
+            <p class="text-md text-gray-200 mb-1">🇧🇩 Bangladesh</p>
 
-          <!-- Rocket -->
-          <div
-            class="group flex items-center gap-2 bg-gradient-to-r from-purple-500/20 to-purple-600/20 hover:from-purple-500/30 hover:to-purple-600/30 px-4 py-3 rounded-lg border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:scale-105"
-          >
-            <img
-              src="/rocket.png"
-              alt="Rocket"
-              class="w-8 h-8 object-contain"
-            />
-            <span class="text-sm font-medium">Rocket</span>
+            <div
+              class="mb-2 p-2 rounded-lg border border-white/10 bg-gradient-to-b from-yellow-200 to-yellow-400 text-black transition-transform duration-300 hover:scale-102"
+            >
+              <a
+                href="https://wa.me/8801816366535"
+                class="font-mono text-md md:text-lg font-medium tracking-wider transition-colors duration-300"
+              >
+                01816366535
+                <sub class="text-[10px] text-gray-900 font-sm">(Send Money)</sub>
+              </a>
+            </div>
+
+            <div class="flex gap-1 md:gap-2 flex-wrap justify-center">
+              <!-- bKash -->
+              <div
+                class="group flex items-center gap-1 bg-gradient-to-r from-pink-500/20 to-pink-600/20 hover:from-pink-500/30 hover:to-pink-600/30 px-2 py-1.5 rounded border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300 hover:scale-105"
+              >
+                <img
+                  src="/bkash.png"
+                  alt="bKash"
+                  class="w-4 h-4 object-contain"
+                />
+                <span class="text-xs font-medium">bKash</span>
+              </div>
+
+              <!-- Nagad -->
+              <div
+                class="group flex items-center gap-1 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 hover:to-red-600/30 px-2 py-1.5 rounded border border-red-500/20 hover:border-red-500/40 transition-all duration-300 hover:scale-105"
+              >
+                <img
+                  src="/nagad.png"
+                  alt="Nagad"
+                  class="w-4 h-4 object-contain"
+                />
+                <span class="text-xs font-medium">Nagad</span>
+              </div>
+
+              <!-- Rocket -->
+              <div
+                class="group flex items-center gap-1 bg-gradient-to-r from-purple-500/20 to-purple-600/20 hover:from-purple-500/30 hover:to-purple-600/30 px-2 py-1.5 rounded border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:scale-105"
+              >
+                <img
+                  src="/rocket.png"
+                  alt="Rocket"
+                  class="w-4 h-4 object-contain"
+                />
+                <span class="text-xs font-medium">Rocket</span>
+              </div>
+            </div>
           </div>
         </div>
-        
       </div>
       <div class="text-center py-4">
         <h4 class="mb-4 font-semibold text-lg">Contribute on GitHub</h4>

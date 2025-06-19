@@ -6,7 +6,7 @@
     "url": "https://anichur.com"
   },
   "private": true,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "scripts": {
     "dev": "vite",

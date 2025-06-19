@@ -20,7 +20,7 @@ export default defineConfig({
             theme_color: '#2b6777',
             background_color: '#f4f8fb',
             display: 'standalone',
-            version: '1.0.3',
+            version: '1.0.5',
             icons: [
                 {
                     "src": "logo.png",
